@@ -18,3 +18,5 @@ genfstab -p /mnt >> /mnt/etc/fstab
 wget https://github.com/jaapjansma/arch-linux-server/raw/master/setup-chrooted.sh -O /mnt/root/setup-chrooted.sh
 chmod u+x /mnt/root/setup-chrooted.sh
 arch-chroot /mnt /root/setup-chrooted.sh
+
+reboot
