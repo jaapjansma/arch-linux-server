@@ -15,13 +15,6 @@ pacstrap /mnt base base-devel git
 
 genfstab -p /mnt >> /mnt/etc/fstab
 
-arch-chroot /mnt
-cd /root
-git clone https://github.com/jaapjansma/arch-linux-server.git
-
-ln -s /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
-hwclock --systohc --utc
-
-sed -i 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g" /etc/locale.gen
-locale-gen
-echo "LANG=en_US.UTF-8" > /etc/locale.conf
+wget https://github.com/jaapjansma/arch-linux-server/raw/master/setup-chrooted.sh -O /mnt/root/setup-chrooted.sh
+chmod u+x /mnt/root/setup-chrooted.sh
+arch-chroot /mnt /root/setup-chrooted.sh
