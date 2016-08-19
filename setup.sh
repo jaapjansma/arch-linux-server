@@ -11,11 +11,11 @@ mount /dev/vda1 /mnt
 mkdir /mnt/home
 mount /dev/vda2 /mnt/home
 
-pacstrap /dev base base-devel git
+pacstrap /mnt base base-devel git
 
 genfstab -p /mnt >> /mnt/etc/fstab
 
-arch-chroot /mnt
+#arch-chroot /mnt
 cd /root
 git clone https://github.com/jaapjansma/arch-linux-server.git
 
