@@ -1,5 +1,5 @@
 [Match]
-Name=eth0
+Name=ens3
 
 [Network]
 DHCP=yes
