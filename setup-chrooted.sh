@@ -20,7 +20,7 @@ systemctl start systemd-networkd.service
 
 mkinitcpio -p linux
 
-pacman -S vim grub sudo openssh
+pacman --noconfirm -S vim grub sudo openssh
 
 sed -i 's/#%wheel      ALL=(ALL) ALL/%wheel      ALL=(ALL) ALL/g' /etc/sudoers
 
