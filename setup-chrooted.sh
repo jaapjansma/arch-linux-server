@@ -22,7 +22,7 @@ mkinitcpio -p linux
 
 pacman --noconfirm -S vim grub sudo openssh
 
-sed -i 's/#%wheel      ALL=(ALL) ALL/%wheel      ALL=(ALL) ALL/g' /etc/sudoers
+sed -i 's/# %wheel      ALL=(ALL) ALL/%wheel      ALL=(ALL) ALL/g' /etc/sudoers
 
 grub-install --target=i386-pc /dev/vda
 grub-mkconfig -o /boot/grub/grub.cfg
