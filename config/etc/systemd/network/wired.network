@@ -3,3 +3,5 @@ Name=ens3
 
 [Network]
 DHCP=yes
+DNS=80.69.66.67
+DNS=80.69.67.66
