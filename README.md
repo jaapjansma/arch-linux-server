@@ -14,3 +14,6 @@ chmod u+x setup.sh
 - openssh
 - vim
 - sudo
+- git
+- base
+- base-devel
