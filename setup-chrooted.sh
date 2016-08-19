@@ -22,6 +22,8 @@ mkinitcpio -p linux
 
 pacman --noconfirm -S vim grub sudo openssh
 
+systemctl enable sshd
+
 echo "%wheel      ALL=(ALL) ALL" >> /etc/sudoers
 
 grub-install --target=i386-pc /dev/vda
