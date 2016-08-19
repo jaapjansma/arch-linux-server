@@ -15,7 +15,7 @@ pacstrap /mnt base base-devel git
 
 genfstab -p /mnt >> /mnt/etc/fstab
 
-#arch-chroot /mnt
+arch-chroot /mnt
 cd /root
 git clone https://github.com/jaapjansma/arch-linux-server.git
 
