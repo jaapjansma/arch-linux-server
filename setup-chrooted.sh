@@ -15,6 +15,8 @@ echo "LANG=en_US.UTF-8" > /etc/locale.conf
 cat /root/confif/hostname > /etc/hostname
 
 cp arch-linux-server/config/etc/systemd/network/wired.network /etc/systemd/network/wired.network
+systemctl enable systemd-resolved 
+systemctl start systemd-resolved
 systemctl enable systemd-networkd.service
 systemctl start systemd-networkd.service
 
