@@ -20,16 +20,19 @@ systemctl start systemd-resolved
 systemctl enable systemd-networkd.service
 systemctl start systemd-networkd.service
 
+echo "[archlinuxfr]
+SigLevel = Never
+Server = http://repo.archlinux.fr/\$arch" >> /etc/pacman.conf
+
+pacman --noconfirm -Sy vim grub sudo openssh yaourt
+
 mkinitcpio -p linux
-
-pacman --noconfirm -S vim grub sudo openssh
-
-systemctl enable sshd
-
-echo "%wheel      ALL=(ALL) ALL" >> /etc/sudoers
 
 grub-install --target=i386-pc /dev/vda
 grub-mkconfig -o /boot/grub/grub.cfg
+
+echo "%wheel      ALL=(ALL) ALL" >> /etc/sudoers
+systemctl enable sshd
 
 useradd -m -G wheel jaap
 passwd jaap
