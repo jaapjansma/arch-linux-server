@@ -1,7 +1,7 @@
 #! /bin/sh
 # This script has to be executed after a chroot
 
-cd /root
+cd /usr/local/bin
 rm -rf arch-linux-server
 git clone https://github.com/jaapjansma/arch-linux-server.git
 
