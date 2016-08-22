@@ -20,6 +20,9 @@ systemctl start systemd-resolved
 systemctl enable systemd-networkd.service
 systemctl start systemd-networkd.service
 
+sudo systemctl enable iptables
+sudo systemctl start iptables
+
 echo "[archlinuxfr]
 SigLevel = Never
 Server = http://repo.archlinux.fr/\$arch" >> /etc/pacman.conf
