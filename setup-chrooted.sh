@@ -1,7 +1,7 @@
 #! /bin/sh
 # This script has to be executed after a chroot
 
-cd /root
+cd /usr/local/bin
 rm -rf arch-linux-server
 git clone https://github.com/jaapjansma/arch-linux-server.git
 
@@ -16,6 +16,9 @@ cat /root/confif/hostname > /etc/hostname
 
 systemctl enable dhcpcd@ens3.service
 systemctl start dhcpcd@ens3.service
+
+sudo systemctl enable iptables
+sudo systemctl start iptables
 
 echo "[archlinuxfr]
 SigLevel = Never
