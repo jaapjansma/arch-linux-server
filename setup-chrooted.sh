@@ -14,22 +14,27 @@ echo "LANG=en_US.UTF-8" > /etc/locale.conf
 
 cat /root/confif/hostname > /etc/hostname
 
-cp arch-linux-server/config/etc/systemd/network/wired.network /etc/systemd/network/wired.network
-systemctl enable systemd-resolved 
-systemctl start systemd-resolved
-systemctl enable systemd-networkd.service
-systemctl start systemd-networkd.service
+systemctl enable dhcpcd@ens3.service
+systemctl start dhcpcd@ens3.service
 
 echo "[archlinuxfr]
 SigLevel = Never
 Server = http://repo.archlinux.fr/\$arch" >> /etc/pacman.conf
 
-pacman --noconfirm -Sy vim grub sudo openssh yaourt
+pacman --noconfirm -Sy vim grub sudo openssh openssl yaourt certbot
 
 mkinitcpio -p linux
 
 grub-install --target=i386-pc /dev/vda
 grub-mkconfig -o /boot/grub/grub.cfg
+
+mkdir /var/yaourt
+chmod a+w /var/yaourt
+sed -i 's/#TMPDIR="\/tmp"/TMPDIR="/var/yaourt"/g' /etc/yaourtrc
+
+mkdir /etc/skel/tmp
+mkdir /etc/skel/bin
+echo "export PATH=\$PATH:~/bin" >> /etc/skel/.bashrc
 
 echo "%wheel      ALL=(ALL) ALL" >> /etc/sudoers
 systemctl enable sshd

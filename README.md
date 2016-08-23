@@ -11,9 +11,12 @@ chmod u+x setup.sh
 
 ## Preinstalled Packages
 
-- openssh
-- vim
-- sudo
-- git
 - base
 - base-devel
+- certbot
+- git
+- openssh
+- openssl
+- sudo
+- vim
+- yaourt
