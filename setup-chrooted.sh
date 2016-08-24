@@ -77,9 +77,18 @@ passwd -d jaap
 passwd -e jaap
 passwd -e root
 
-mail -s "New server ready" $admin_email << "New server ready. \n\nLogin with ssh at $hostname\nUser: jaap\nPassword: $random_passwd_jaap\n\nRoot passwd: $random_passwd_root"
+echo "New server ready. 
 
-#reboot now
+Login with ssh at $hostname
+User: jaap
+Password: $random_passwd_jaap
+
+Root passwd: $random_passwd_root
+
+" > /tmp/newserver.email
+
+
+mail -s "New server ready" $admin_email < /tmp/newserver.email
 
 
 

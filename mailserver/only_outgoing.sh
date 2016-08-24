@@ -1,6 +1,6 @@
 #! /bin/bash
 
-sudo pacman -S postfix
+sudo pacman --noconfirm -S postfix
 
 sudo echo "
 # Simple spam prevention. Taken from http://www.netarky.com/programming/arch_linux/Arch_Linux_mail_server_setup_1.html
