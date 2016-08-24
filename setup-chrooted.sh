@@ -5,6 +5,8 @@ cd /usr/local/bin
 rm -rf arch-linux-server
 git clone https://github.com/jaapjansma/arch-linux-server.git
 
+admin_email=admin@edeveloper.nl
+
 ln -s /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
 hwclock --systohc --utc
 
@@ -49,8 +51,11 @@ read hostname
 hostnamectl set-hostname $hostname
 hostname="$(hostname)"
 
+# Install outgoing mailserver
+arch-linux-server/mailserver/only-outgoing.sh
+
 # Create a default certificate
-certbot certonly --standalone -d $hostname --email admin@edeveloper.nl --agree-tos
+certbot certonly --standalone -d $hostname --email $admin_email --agree-tos
 ln -s /etc/letsencrypt/live/$hostname /etc/letsencrypt/root
 cp arch-linux-server/config/etc/systemd/system/certbot.timer /etc/systemd/system/certbot.timer
 cp arch-linux-server/config/etc/systemd/system/certbot.service /etc/systemd/system/certbot.service
@@ -70,4 +75,10 @@ echo "$random_passwd_root" | passwd --stdin
 echo "$random_passwd_jaap" | passwd jaap --stdin
 passwd -e jaap
 passwd -e root
+
+mail -s "New server ready" $admin_email << "New server ready. \n\nLogin with ssh at $hostname\nUser: jaap\nPassword: $random_passwd_jaap\n\nRoot passwd: $random_passwd_root"
+
+reboot now
+
+
 

@@ -76,4 +76,8 @@ sudo cp config/etc/nginx/sites-default/default-https.conf /etc/nginx/sites-defau
 sudo sed -i 's/#return 301 https:\/\/$host$request_uri;/return 301 https:\/\/$host$request_uri;/g' /etc/nginx/sites-default/default-http.conf
 sudo sed -i 's/fastcgi_pass  unix:\/var\/run\/php-fpm\/php-fpm.sock;/fastcgi_pass  unix:\/var\/run\/php56-fpm\/php-fpm.sock;/g' /etc/nginx/sites-default/default-https.conf
 
+sudo systemctl reload nginx
+
+sudo chown -R http:http /usr/share/nginx/html
+sudo chmod 0755 /usr/share/nginx/html
 
