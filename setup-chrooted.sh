@@ -72,13 +72,13 @@ chown -R jaap:jaap /home/jaap/.ssh
 random_passwd_root="$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-32};echo;)"
 random_passwd_jaap="$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-32};echo;)"
 echo "$random_passwd_root" | passwd --stdin
-echo "$random_passwd_jaap" | passwd jaap --stdin
+passwd -d jaap
 passwd -e jaap
 passwd -e root
 
 mail -s "New server ready" $admin_email << "New server ready. \n\nLogin with ssh at $hostname\nUser: jaap\nPassword: $random_passwd_jaap\n\nRoot passwd: $random_passwd_root"
 
-reboot now
+#reboot now
 
 
 
