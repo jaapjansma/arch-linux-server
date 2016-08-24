@@ -53,7 +53,7 @@ hostnamectl set-hostname $hostname
 hostname="$(hostname)"
 
 # Install outgoing mailserver
-arch-linux-server/mailserver/only-outgoing.sh
+arch-linux-server/mailserver/only_outgoing.sh
 
 # Create a default certificate
 certbot certonly --standalone -d $hostname --email $admin_email --agree-tos
