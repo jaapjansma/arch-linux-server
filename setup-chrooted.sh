@@ -42,6 +42,20 @@ echo "export PATH=\$PATH:~/bin" >> /etc/skel/.bashrc
 echo "%wheel      ALL=(ALL) ALL" >> /etc/sudoers
 systemctl enable sshd
 
+# Set Hostname
+echo "What is the hostname?"
+read hostname
+hostnamectl set-hostname $hostname
+hostname="$(hostname)"
+
+# Create a default certificate
+sudo certbot certonly --standalone -d $(hostname) --email admin@edeveloper.nl --agree-tos
+cp arch-linux-server/config/etc/systemd/system/certbot.timer /etc/systemd/system/certbot.timer
+cp arch-linux-server/config/etc/systemd/system/certbot.service /etc/systemd/system/certbot.service
+sudo systemctl daemon-reload
+sudo systemctl enable certbot.timer
+sudo systemctl start certbot.timer
+
 useradd -m -G wheel jaap
 passwd jaap
 passwd
