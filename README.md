@@ -20,3 +20,4 @@ chmod u+x setup.sh
 - sudo
 - vim
 - yaourt
+- postfix *Configured for sending outgoing e-mail*
