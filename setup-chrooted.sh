@@ -37,6 +37,7 @@ sed -i 's/#TMPDIR="\/tmp"/TMPDIR="/var/yaourt"/g' /etc/yaourtrc
 
 mkdir /etc/skel/tmp
 mkdir /etc/skel/bin
+mkdir /etc/skel/www
 echo "export PATH=\$PATH:~/bin" >> /etc/skel/.bashrc
 
 echo "%wheel      ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
@@ -49,7 +50,8 @@ hostnamectl set-hostname $hostname
 hostname="$(hostname)"
 
 # Create a default certificate
-certbot certonly --standalone -d $(hostname) --email admin@edeveloper.nl --agree-tos
+certbot certonly --standalone -d $hostname --email admin@edeveloper.nl --agree-tos
+ln -s /etc/letsencrypt/live/$hostname /etc/letsencrypt/root
 cp arch-linux-server/config/etc/systemd/system/certbot.timer /etc/systemd/system/certbot.timer
 cp arch-linux-server/config/etc/systemd/system/certbot.service /etc/systemd/system/certbot.service
 systemctl daemon-reload
@@ -59,7 +61,7 @@ systemctl start certbot.timer
 # Add users
 useradd -m -G wheel jaap
 mkdir -p /home/jaap/.ssh
-cp arch-linux-server/public_keys/jaap/id_rsa.pub /home/jaap/.shh/authorized_keys
+cp arch-linux-server/public_keys/jaap/id_rsa.pub /home/jaap/.ssh/authorized_keys
 chown -R jaap:jaap /home/jaap/.ssh
 
 random_passwd_root="$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-32};echo;)"
