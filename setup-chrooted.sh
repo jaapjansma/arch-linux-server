@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 # This script has to be executed after a chroot
 
 cd /usr/local/bin
@@ -39,7 +39,7 @@ mkdir /etc/skel/tmp
 mkdir /etc/skel/bin
 echo "export PATH=\$PATH:~/bin" >> /etc/skel/.bashrc
 
-echo "%wheel      ALL=(ALL) ALL" >> /etc/sudoers
+echo "%wheel      ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 systemctl enable sshd
 
 # Set Hostname
@@ -49,14 +49,23 @@ hostnamectl set-hostname $hostname
 hostname="$(hostname)"
 
 # Create a default certificate
-sudo certbot certonly --standalone -d $(hostname) --email admin@edeveloper.nl --agree-tos
+certbot certonly --standalone -d $(hostname) --email admin@edeveloper.nl --agree-tos
 cp arch-linux-server/config/etc/systemd/system/certbot.timer /etc/systemd/system/certbot.timer
 cp arch-linux-server/config/etc/systemd/system/certbot.service /etc/systemd/system/certbot.service
-sudo systemctl daemon-reload
-sudo systemctl enable certbot.timer
-sudo systemctl start certbot.timer
+systemctl daemon-reload
+systemctl enable certbot.timer
+systemctl start certbot.timer
 
+# Add users
 useradd -m -G wheel jaap
-passwd jaap
-passwd
+mkdir -p /home/jaap/.ssh
+cp arch-linux-server/public_keys/jaap/id_rsa.pub /home/jaap/.shh/authorized_keys
+chown -R jaap:jaap /home/jaap/.ssh
+
+random_passwd_root="$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-32};echo;)"
+random_passwd_jaap="$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-32};echo;)"
+echo "$random_passwd_root" | passwd --stdin
+echo "$random_passwd_jaap" | passwd jaap --stdin
+passwd -e jaap
+passwd -e root
 
