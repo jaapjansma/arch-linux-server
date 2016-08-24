@@ -44,6 +44,7 @@ echo "export PATH=\$PATH:~/bin" >> /etc/skel/.bashrc
 
 echo "%wheel      ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 systemctl enable sshd
+systemctl start sshd
 
 # Set Hostname
 echo "What is the hostname?"

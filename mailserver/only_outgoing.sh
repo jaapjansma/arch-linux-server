@@ -13,7 +13,7 @@ sudo echo "
 root:   jaap
 spam:   jaap
 ham:    jaap
-jaap:   info@edeveloper.nl
+jaap:   admin@edeveloper.nl
 " >> /etc/postfix/aliases
 
 sudo systemctl enable postfix
