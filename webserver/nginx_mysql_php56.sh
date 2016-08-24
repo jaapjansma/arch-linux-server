@@ -33,6 +33,6 @@ sudo mkdir /etc/nginx/sites-default
 
 sudo cp config/etc/nginx/nginx.conf /etc/nginx/nginx.conf
 
-sudo cp config/etc/nginx/default-sites/default-http.conf /etc/nginx/default-sites/default-http.conf
+sudo cp config/etc/nginx/default-sites/default-http.conf /etc/nginx/sites-default/default-http.conf
 
 
