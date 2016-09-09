@@ -40,7 +40,7 @@ mkdir /etc/skel/bin
 mkdir /etc/skel/www
 echo "export PATH=\$PATH:~/bin" >> /etc/skel/.bashrc
 
-echo "%wheel      ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+echo "%wheel      ALL=(ALL) ALL" >> /etc/sudoers
 systemctl enable sshd
 systemctl start sshd
 
@@ -91,6 +91,3 @@ Root passwd: $random_passwd_root
 cp arch-linux-server/config/etc/systemd/system/post-installation.service /etc/systemd/system/
 systemctl daemon-reload
 systemctl enable post-installation.service
-
-
-

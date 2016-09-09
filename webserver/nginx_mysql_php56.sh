@@ -1,7 +1,6 @@
 #! /bin/bash
 
-cd dirname $0
-cd ..
+cd /usr/local/bin/arch-linux-server
 
 hostname="$(hostname)"
 
