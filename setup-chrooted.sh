@@ -92,8 +92,5 @@ cp arch-linux-server/config/etc/systemd/system/post-installation.service /etc/sy
 systemctl daemon-reload
 systemctl enable post-installation.service
 
-echo "wait"
-read new_input
-
 
 
