@@ -1,0 +1,7 @@
+[Unit]
+Description=Post installation instructions
+Wants=postfix
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/arch-linux-server/scripts/post-installation.sh

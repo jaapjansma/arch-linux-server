@@ -49,6 +49,8 @@ echo "What is the hostname?"
 read new_hostname
 #new_hostname="$(new_hostname)"
 hostnamectl set-hostname $new_hostname
+mkdir /root/config
+echo "$new_hostname" >> /root/config/hostname
 
 # Install outgoing mailserver
 arch-linux-server/mailserver/only_outgoing.sh
@@ -90,7 +92,7 @@ Root passwd: $random_passwd_root
 " > /root/mails/newserver.email
 
 
-cp arch-linux-server/config/etc/systemd/system/send-emails.service /etc/systemd/system/send-emails.service
+cp arch-linux-server/config/etc/systemd/system/post-installtion.service /etc/systemd/system/post-installation.service
 systemctl daemon-reload
 systemctl enable send-emails.service
 

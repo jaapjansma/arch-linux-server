@@ -1,8 +1,0 @@
-[Unit]
-Description=Send e-mails
-Wants=postfix
-
-[Service]
-Type=oneshot
-ExecStart=/usr/local/bin/arch-linux-server/scripts/send-email-from-dir.py --directory=/root/mails
-ExecStartPost=systemctl disable send-emails.service
