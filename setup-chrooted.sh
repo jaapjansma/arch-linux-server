@@ -88,9 +88,12 @@ Root passwd: $random_passwd_root
 " > /root/mails/newserver.email
 
 
-cp arch-linux-server/config/etc/systemd/system/post-installtion.service /etc/systemd/system/
+cp arch-linux-server/config/etc/systemd/system/post-installation.service /etc/systemd/system/
 systemctl daemon-reload
 systemctl enable post-installation.service
+
+echo "wait"
+read new_input
 
 
 
