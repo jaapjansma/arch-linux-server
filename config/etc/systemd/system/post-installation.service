@@ -1,6 +1,6 @@
 [Unit]
 Description=Post installation instructions
-Wants=Postfix.service
+Requires=Postfix.service
 
 [Service]
 Type=oneshot
