@@ -5,3 +5,6 @@ Wants=postfix
 [Service]
 Type=oneshot
 ExecStart=/usr/local/bin/arch-linux-server/scripts/post-installation.sh
+
+[Install]
+WantedBy=multi-user.target

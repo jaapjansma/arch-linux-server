@@ -47,8 +47,6 @@ systemctl start sshd
 # Set Hostname
 echo "What is the hostname?"
 read new_hostname
-#new_hostname="$(new_hostname)"
-hostnamectl set-hostname ${new_hostname}
 mkdir /root/config
 echo ${new_hostname} >> /root/config/hostname
 
@@ -90,9 +88,9 @@ Root passwd: $random_passwd_root
 " > /root/mails/newserver.email
 
 
-cp arch-linux-server/config/etc/systemd/system/post-installtion.service /etc/systemd/system/post-installation.service
+cp arch-linux-server/config/etc/systemd/system/post-installtion.service /etc/systemd/system/
 systemctl daemon-reload
-systemctl enable send-emails.service
+systemctl enable post-installation.service
 
 
 
