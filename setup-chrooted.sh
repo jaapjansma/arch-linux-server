@@ -48,9 +48,9 @@ systemctl start sshd
 echo "What is the hostname?"
 read new_hostname
 #new_hostname="$(new_hostname)"
-hostnamectl set-hostname $new_hostname
+hostnamectl set-hostname ${new_hostname}
 mkdir /root/config
-echo "$new_hostname" >> /root/config/hostname
+echo ${new_hostname} >> /root/config/hostname
 
 # Install outgoing mailserver
 arch-linux-server/mailserver/only_outgoing.sh
