@@ -1,5 +1,6 @@
 [Unit]
 Description=Send e-mails
+Wants=postfix
 
 [Service]
 Type=oneshot

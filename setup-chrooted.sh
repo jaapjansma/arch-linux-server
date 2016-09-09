@@ -14,8 +14,6 @@ sed -i 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
 locale-gen
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
 
-cat /root/confif/hostname > /etc/hostname
-
 systemctl enable dhcpcd@ens3.service
 systemctl start dhcpcd@ens3.service
 
