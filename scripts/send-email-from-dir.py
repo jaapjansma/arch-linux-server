@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import os
 import argparse
-import json
+import smtplib
 
 parser = argparse.ArgumentParser(description="""
 Send e-mails. The messages are stored as flat files in a directory. Where each file is a message.
@@ -21,11 +21,18 @@ for filename in os.listdir(directory):
 
         with open(path) as f:
             fromLine = f.readline()
+            fromLine = fromLine[:-1]
             toLine = f.readline()
+            toLine = toLine[:-1]
             subjectLine = f.readline()
+            subjectLine = subjectLine[:-1]
             message = f.read()
-            message = message + "\n"
+            message = message
+            msg = ("From: %s\r\nTo: %s\r\nSubject: %s\r\n\r\n" %(fromLine, toLine, subjectLine))
+            msg = msg + message
 
             #os.remove(path)
 
-            os.system(['mail,  '-s "'+subjectLine+'"', toLine], input=message.encode())
+            server = smtplib.SMTP()
+            server.connect()
+            server.sendmail(fromLine, toLine, msg)

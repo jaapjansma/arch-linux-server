@@ -26,7 +26,7 @@ echo "[archlinuxfr]
 SigLevel = Never
 Server = http://repo.archlinux.fr/\$arch" >> /etc/pacman.conf
 
-pacman --noconfirm -Sy vim grub sudo openssh openssl yaourt certbot
+pacman --noconfirm -Sy vim grub sudo openssh openssl yaourt certbot python3
 
 mkinitcpio -p linux
 
@@ -48,16 +48,16 @@ systemctl start sshd
 
 # Set Hostname
 echo "What is the hostname?"
-read hostname
-hostnamectl set-hostname $hostname
-hostname="$(hostname)"
+read new_hostname
+#new_hostname="$(new_hostname)"
+hostnamectl set-hostname $new_hostname
 
 # Install outgoing mailserver
 arch-linux-server/mailserver/only_outgoing.sh
 
 # Create a default certificate
-certbot certonly --standalone -d $hostname --email $admin_email --agree-tos
-ln -s /etc/letsencrypt/live/$hostname /etc/letsencrypt/root
+certbot certonly --standalone -d $new_hostname --email $admin_email --agree-tos
+ln -s /etc/letsencrypt/live/$new_hostname /etc/letsencrypt/root
 cp arch-linux-server/config/etc/systemd/system/certbot.timer /etc/systemd/system/certbot.timer
 cp arch-linux-server/config/etc/systemd/system/certbot.service /etc/systemd/system/certbot.service
 systemctl daemon-reload
@@ -78,12 +78,12 @@ passwd -e jaap
 passwd -e root
 
 mkdir /root/mails
-echo "info@edeveloper.nl
-info@edeveloper.nl
+echo "root@$new_hostname
+$admin_email
 New server ready
 Your server is ready below are your login details.
 
-Login with ssh at $hostname
+Login with ssh at $new_hostname
 User: jaap
 Password: $random_passwd_jaap
 
