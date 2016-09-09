@@ -78,7 +78,10 @@ passwd -e jaap
 passwd -e root
 
 mkdir /root/mails
-echo "New server ready. 
+echo "info@edeveloper.nl
+info@edeveloper.nl
+New server ready
+Your server is ready below are your login details.
 
 Login with ssh at $hostname
 User: jaap

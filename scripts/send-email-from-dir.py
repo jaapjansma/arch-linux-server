@@ -2,8 +2,6 @@
 import os
 import argparse
 import json
-import smtplib
-from email.mime.text import MIMEText
 
 parser = argparse.ArgumentParser(description="""
 Send e-mails. The messages are stored as flat files in a directory. Where each file is a message.
@@ -25,20 +23,9 @@ for filename in os.listdir(directory):
             fromLine = f.readline()
             toLine = f.readline()
             subjectLine = f.readline()
-            message = MIMEText(f.read())
-            os.remove(path)
+            message = f.read()
+            message = message + "\n"
 
-            message['Subject'] = subjectLine
-            message['From'] = fromLine
-            message['To'] = toLine
+            #os.remove(path)
 
-            # Send the message via our own SMTP server.
-            try:
-                s = smtplib.SMTP('localhost')
-                s.send_message(msg)
-                s.quit()
-                print("Send '{:s}' to {:s}", subjectLine, toLine)
-            except ConnectionRefusedError:
-                print('Could not connect to mailserver')
-            except:
-                print('Could not send e-mail')
+            os.system(['mail,  '-s "'+subjectLine+'"', toLine], input=message.encode())
