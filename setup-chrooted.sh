@@ -63,10 +63,8 @@ mkdir -p /home/jaap/.ssh
 cp arch-linux-server/public_keys/jaap/id_rsa.pub /home/jaap/.ssh/authorized_keys
 chown -R jaap:jaap /home/jaap/.ssh
 
-#random_passwd_root="$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-32};echo;)"
-#random_passwd_jaap="$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-32};echo;)"
-random_passwd_root=watisdat
-random_passwd_jaap=watisdat
+random_passwd_root=$(cat /dev/urandom | tr -dc "a-zA-Z0-9!@#$%^&*()_+?><~\;" | fold -w 32 | head -n 1)
+random_passwd_jaap=$(cat /dev/urandom | tr -dc "a-zA-Z0-9!@#$%^&*()_+?><~\;" | fold -w 32 | head -n 1)
 echo -e "root:$random_passwd_root" | chpasswd
 echo -e "jaap:$random_passwd_jaap" | chpasswd
 
