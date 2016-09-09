@@ -6,6 +6,7 @@ rm -rf arch-linux-server
 git clone https://github.com/jaapjansma/arch-linux-server.git
 
 admin_email=admin@edeveloper.nl
+new_hostname=`cat /root/config/hostname`
 
 ln -s /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
 hwclock --systohc --utc
@@ -43,12 +44,6 @@ echo "export PATH=\$PATH:~/bin" >> /etc/skel/.bashrc
 echo "%wheel      ALL=(ALL) ALL" >> /etc/sudoers
 systemctl enable sshd
 systemctl start sshd
-
-# Set Hostname
-echo "What is the hostname?"
-read new_hostname
-mkdir /root/config
-echo ${new_hostname} >> /root/config/hostname
 
 # Install outgoing mailserver
 arch-linux-server/mailserver/only_outgoing.sh
