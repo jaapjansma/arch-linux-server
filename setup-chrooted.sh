@@ -63,11 +63,12 @@ mkdir -p /home/jaap/.ssh
 cp arch-linux-server/public_keys/jaap/id_rsa.pub /home/jaap/.ssh/authorized_keys
 chown -R jaap:jaap /home/jaap/.ssh
 
-random_passwd_root="$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-32};echo;)"
-random_passwd_jaap="$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-32};echo;)"
+#random_passwd_root="$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-32};echo;)"
+#random_passwd_jaap="$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-32};echo;)"
+random_passwd_root=watisdat
 random_passwd_jaap=watisdat
-echo -e "$random_passwd_root" | passwd --stdin
-echo -e "$random_passwd_jaap" | passwd jaap --stdin
+echo -e "root:$random_passwd_root" | chpasswd
+echo -e "jaap:$random_passwd_jaap" | chpasswd
 
 mkdir /root/mails
 echo "root@$new_hostname
