@@ -77,6 +77,7 @@ passwd -d jaap
 passwd -e jaap
 passwd -e root
 
+mkdir /root/mails
 echo "New server ready. 
 
 Login with ssh at $hostname
@@ -85,10 +86,12 @@ Password: $random_passwd_jaap
 
 Root passwd: $random_passwd_root
 
-" > /tmp/newserver.email
+" > /root/mails/newserver.email
 
 
-mail -s "New server ready" $admin_email < /tmp/newserver.email
+cp arch-linux-server/config/etc/systemd/system/send-emails.service /etc/systemd/system/send-emails.service
+systemctl daemon-reload
+systemctl enable send-emails.service
 
 
 
