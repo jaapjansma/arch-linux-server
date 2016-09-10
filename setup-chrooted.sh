@@ -18,8 +18,10 @@ echo "LANG=en_US.UTF-8" > /etc/locale.conf
 systemctl enable dhcpcd@ens3.service
 systemctl start dhcpcd@ens3.service
 
-sudo systemctl enable iptables
-sudo systemctl start iptables
+systemctl enable iptables
+systemctl start iptables
+
+systemctl mask tmp.mount
 
 echo "[archlinuxfr]
 SigLevel = Never
