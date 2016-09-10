@@ -17,7 +17,7 @@ sudo cp config/etc/nginx/nginx.conf /etc/nginx/nginx.conf
 sudo cp config/etc/nginx/sites-default/default-http.conf /etc/nginx/sites-default/default-http.conf
 
 sudo ln -s scripts/reload-nginx.sh /usr/local/bin/reload-webserver.sh
-sudo echo "ExecStartPost=/usr/local/bin/reload-webserver.sh" >> /etc/systemd/system/certbot.service
+sudo bash -c 'echo "ExecStartPost=/usr/local/bin/reload-webserver.sh" >> /etc/systemd/system/certbot.service'
 sudo systemctl daemon-reload
 
 # Configure HTTPS
