@@ -1,5 +1,8 @@
 #! /bin/bash
 
+systemctl mask tmp.mount
+umount /tmp
+
 new_hostname=`cat /root/config/hostname`
 hostnamectl set-hostname ${new_hostname}
 

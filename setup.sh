@@ -1,11 +1,23 @@
 #! /usr/bin/sh
 
+mkdir config
+
 # Set Hostname
 echo "What is the hostname?"
 read new_hostname
-mkdir config
 echo ${new_hostname} >> config/hostname
 
+echo "To where should we send e-mail?"
+read admin_email
+echo ${admin_email} >> config/admin_email
+
+echo "What should be your username?"
+read admin_username
+echo ${admin_username} >> config/admin_username
+
+echo "What is your e-mail address?"
+read admin_user_email
+echo ${admin_user_email} >> config/admin_user_email
 
 parted /dev/vda -s mklabel msdos
 parted /dev/vda -s mkpart primary ext4 1MiB 30GiB
@@ -26,8 +38,7 @@ genfstab -p /mnt >> /mnt/etc/fstab
 
 wget https://github.com/jaapjansma/arch-linux-server/raw/master/setup-chrooted.sh -O /mnt/root/setup-chrooted.sh
 chmod u+x /mnt/root/setup-chrooted.sh
-mkdir /mnt/root/config
-cp config/hostname /mnt/root/config/hostname
+cp -R config /mnt/root/config
 arch-chroot /mnt /root/setup-chrooted.sh
 
 reboot

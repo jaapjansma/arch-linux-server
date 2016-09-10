@@ -5,8 +5,10 @@ cd /usr/local/bin
 rm -rf arch-linux-server
 git clone https://github.com/jaapjansma/arch-linux-server.git
 
-admin_email=admin@edeveloper.nl
 new_hostname=`cat /root/config/hostname`
+admin_email=`cat /root/config/admin_email`
+admin_username=`cat /root/config/admin_username`
+admin_user_email=`cat /root/config/admin_user_email`
 
 ln -s /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
 hwclock --systohc --utc
@@ -18,10 +20,9 @@ echo "LANG=en_US.UTF-8" > /etc/locale.conf
 systemctl enable dhcpcd@ens3.service
 systemctl start dhcpcd@ens3.service
 
+touch /etc/iptables/iptables.rules
 systemctl enable iptables
 systemctl start iptables
-
-systemctl mask tmp.mount
 
 echo "[archlinuxfr]
 SigLevel = Never
@@ -60,15 +61,18 @@ systemctl enable certbot.timer
 systemctl start certbot.timer
 
 # Add users
-useradd -m -G wheel jaap
-mkdir -p /home/jaap/.ssh
-cp arch-linux-server/public_keys/jaap/id_rsa.pub /home/jaap/.ssh/authorized_keys
-chown -R jaap:jaap /home/jaap/.ssh
+useradd -m -G wheel ${admin_username}
+mkdir -p /home/${admin_username}/.ssh
+if [ -f "arch-linux-server/public_keys/${admin_username}/id_rsa.pub" ]
+then
+  cp arch-linux-server/public_keys/${admin_username}/id_rsa.pub /home/${admin_username}/.ssh/authorized_keys
+fi  
+chown -R ${admin_username}:${admin_username} /home/${admin_username}/.ssh
 
 random_passwd_root=$(cat /dev/urandom | tr -dc "a-zA-Z0-9!@#$%^&*()_+?><~\;" | fold -w 32 | head -n 1)
-random_passwd_jaap=$(cat /dev/urandom | tr -dc "a-zA-Z0-9!@#$%^&*()_+?><~\;" | fold -w 32 | head -n 1)
+random_passwd_user=$(cat /dev/urandom | tr -dc "a-zA-Z0-9!@#$%^&*()_+?><~\;" | fold -w 32 | head -n 1)
 echo -e "root:$random_passwd_root" | chpasswd
-echo -e "jaap:$random_passwd_jaap" | chpasswd
+echo -e "$admin_username:$random_passwd_user" | chpasswd
 
 mkdir /root/mails
 echo "root@$new_hostname
@@ -77,12 +81,16 @@ New server ready
 Your server is ready below are your login details.
 
 Login with ssh at $new_hostname
-User: jaap
-Password: $random_passwd_jaap
+User: $admin_username
+Password: $random_passwd_user
 
 Root passwd: $random_passwd_root
 
 " > /root/mails/newserver.email
+
+echo echo ${admin_email} >> /root/.forward
+echo echo ${admin_user_email} >> /home/jaap/.forward
+chown ${admin_username}:${admin_username} /home/jaap.forward
 
 
 cp arch-linux-server/config/etc/systemd/system/post-installation.service /etc/systemd/system/

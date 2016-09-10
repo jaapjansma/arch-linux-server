@@ -31,8 +31,8 @@ for filename in os.listdir(directory):
             msg = ("From: %s\r\nTo: %s\r\nSubject: %s\r\n\r\n" %(fromLine, toLine, subjectLine))
             msg = msg + message
 
-            #os.remove(path)
-
             server = smtplib.SMTP()
             server.connect()
             server.sendmail(fromLine, toLine, msg)
+
+            os.remove(path)
