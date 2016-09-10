@@ -7,10 +7,6 @@ echo "What is the hostname?"
 read new_hostname
 echo ${new_hostname} >> config/hostname
 
-echo "To whom should we send root e-mail?"
-read admin_email
-echo ${admin_email} >> config/admin_email
-
 echo "What should be your username?"
 read admin_username
 echo ${admin_username} >> config/admin_username

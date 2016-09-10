@@ -2,10 +2,6 @@
 
 cd /usr/local/bin/arch-linux-server
 
-admin_email=`cat /root/config/admin_email`
-admin_username=`cat /root/config/admin_username`
-admin_user_email=`cat /root/config/admin_user_email`
-
 sudo pacman --noconfirm -S postfix
 
 sudo echo "
@@ -16,10 +12,9 @@ smtpd_delay_reject = yes" >> /etc/postfix/main.cf
 
 sudo echo "
 # Person who should get root's mail. Don't receive mail as root!
-root:   $admin_email
-spam:   $admin_username
-ham:    $admin_username
-$admin_username:   $admin_user_email
+spam:   root
+ham:    root
+postmaster:   root
 " >> /etc/postfix/aliases
 
 newaliases

@@ -6,7 +6,6 @@ rm -rf arch-linux-server
 git clone https://github.com/jaapjansma/arch-linux-server.git
 
 new_hostname=`cat /root/config/hostname`
-admin_email=`cat /root/config/admin_email`
 admin_username=`cat /root/config/admin_username`
 admin_user_email=`cat /root/config/admin_user_email`
 
@@ -52,7 +51,7 @@ systemctl start sshd
 arch-linux-server/mailserver/only_outgoing.sh
 
 # Create a default certificate
-certbot certonly --standalone -d $new_hostname --email $admin_email --agree-tos
+certbot certonly --standalone -d $new_hostname --email $admin_user_email --agree-tos
 ln -s /etc/letsencrypt/live/$new_hostname /etc/letsencrypt/root
 cp arch-linux-server/config/etc/systemd/system/certbot.timer /etc/systemd/system/certbot.timer
 cp arch-linux-server/config/etc/systemd/system/certbot.service /etc/systemd/system/certbot.service
@@ -76,7 +75,7 @@ echo -e "$admin_username:$random_passwd_user" | chpasswd
 
 mkdir /root/mails
 echo "root@$new_hostname
-$admin_email
+$admin_user_email
 New server ready
 Your server is ready below are your login details.
 
@@ -88,9 +87,9 @@ Root passwd: $random_passwd_root
 
 " > /root/mails/newserver.email
 
-echo ${admin_email} >> /root/.forward
-echo ${admin_user_email} >> /home/jaap/.forward
-chown ${admin_username}.${admin_username} /home/jaap.forward
+echo ${admin_username} >> /root/.forward
+echo ${admin_user_email} >> /home/${admin_username}/.forward
+chown ${admin_username}.${admin_username} /home/${admin_username}.forward
 
 
 cp arch-linux-server/config/etc/systemd/system/post-installation.service /etc/systemd/system/
