@@ -10,10 +10,12 @@ echo ${new_hostname} >> config/hostname
 parted /dev/vda -s mklabel msdos
 parted /dev/vda -s mkpart primary ext4 1MiB 30GiB
 parted /dev/vda -s set 1 boot on
-parted /dev/vda -s mkpart primary ext4 30GiB 100%
+parted /dev/vda -s mkpart primary linux-swap 30GiB 34GiB
+parted /dev/vda -s mkpart primary ext4 34GiB 100%
 
 mkfs.ext4 /dev/vda1
-mkfs.ext4 /dev/vda2
+mkfs.ext4 /dev/vda3
+mkswap /dev/vda2
 
 mount /dev/vda1 /mnt
 mkdir /mnt/home

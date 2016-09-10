@@ -23,7 +23,8 @@ sudo iptables-save > /etc/iptables/iptables.rules
 sudo systemctl restart iptables
 
 # Install PHP5.6
-gpg --keyserver hkp://hkps.pool.sks-keyservers.net --recv-keys C2BF0BC433CFC8B3 FE857D9A90D90EC1 
+gpg --keyserver hkp://hkps.pool.sks-keyservers.net --recv-keys C2BF0BC433CFC8B3 FE857D9A90D90EC1
+
 yaourt -S --noconfirm php56-fpm
 
 sudo sed -i 's/;extension=ftp.so/extension=ftp.so/g' /etc/php56/php.ini
@@ -79,4 +80,3 @@ sudo systemctl reload nginx
 
 sudo chown -R http:http /usr/share/nginx/html
 sudo chmod 0755 /usr/share/nginx/html
-
