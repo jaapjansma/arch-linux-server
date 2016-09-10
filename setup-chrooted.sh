@@ -73,7 +73,7 @@ random_passwd_user=$(cat /dev/urandom | tr -dc "a-zA-Z0-9!@#$%^&*()_+?><~\;" | f
 echo -e "root:$random_passwd_root" | chpasswd
 echo -e "$admin_username:$random_passwd_user" | chpasswd
 
-mkdir /root/mails
+mkdir /tmp/mails
 echo "root@$new_hostname
 $admin_user_email
 New server ready
@@ -85,7 +85,7 @@ Password: $random_passwd_user
 
 Root passwd: $random_passwd_root
 
-" > /root/mails/newserver.email
+" > /tmp/mails/newserver.email
 
 echo ${admin_username} >> /root/.forward
 echo ${admin_user_email} >> /home/${admin_username}/.forward
