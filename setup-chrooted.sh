@@ -64,9 +64,9 @@ useradd -m -G wheel ${admin_username}
 mkdir -p /home/${admin_username}/.ssh
 if [ -f "arch-linux-server/public_keys/${admin_username}/id_rsa.pub" ]
 then
-  cp arch-linux-server/public_keys/${admin_username}/id_rsa.pub /home/${admin_username}/.ssh/authorized_keys
+  cp arch-linux-server/public_keys/$admin_username/id_rsa.pub /home/$admin_username/.ssh/authorized_keys
 fi
-chown -R ${admin_username}.${admin_username} /home/${admin_username}/.ssh
+chown -R $admin_username.$admin_username /home/${admin_username}/.ssh
 
 random_passwd_root=$(cat /dev/urandom | tr -dc "a-zA-Z0-9!@#$%^&*()_+?><~\;" | fold -w 32 | head -n 1)
 random_passwd_user=$(cat /dev/urandom | tr -dc "a-zA-Z0-9!@#$%^&*()_+?><~\;" | fold -w 32 | head -n 1)
@@ -88,8 +88,8 @@ Root passwd: $random_passwd_root
 " > /tmp/mails/newserver.email
 
 echo ${admin_username} >> /root/.forward
-echo ${admin_user_email} >> /home/${admin_username}/.forward
-chown ${admin_username}.${admin_username} /home/${admin_username}.forward
+echo ${admin_user_email} >> /home/$admin_username/.forward
+chown $admin_username.$admin_username /home/$admin_username.forward
 
 
 cp arch-linux-server/config/etc/systemd/system/post-installation.service /etc/systemd/system/
