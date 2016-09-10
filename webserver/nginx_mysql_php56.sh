@@ -16,7 +16,7 @@ sudo systemctl start mariadb
 mkdir /tmp/mails
 random_passwd_root=$(cat /dev/urandom | tr -dc "a-zA-Z0-9!@#$%^&*()_+?><~\;" | fold -w 32 | head -n 1)
 echo "root@$hostname
-$jaap@hostname
+root@$hostname
 MySQL Installations
 
 Root passwd: $random_passwd_root
@@ -38,9 +38,9 @@ python3 /usr/local/bin/arch-linux-server/scripts/send-email-from-dir.py --direct
 rm -rf /tmp/mails
 
 # Make sure the port 3306 is only permitted from a local interface and not from outside.
-sudo iptables -A INPUT -i lo -p tcp --dport 3306 -j ACCEPT
-sudo iptables -A INPUT -p tcp --dport 3306 -j DROP
-sudo iptables-save > /etc/iptables/iptables.rules
+sudo bash -c "iptables -A INPUT -i lo -p tcp --dport 3306 -j ACCEPT"
+sudo bash -c "iptables -A INPUT -p tcp --dport 3306 -j DROP"
+sudo bash -c "iptables-save > /etc/iptables.rules"
 
 sudo systemctl restart iptables
 

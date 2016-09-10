@@ -66,8 +66,8 @@ mkdir -p /home/${admin_username}/.ssh
 if [ -f "arch-linux-server/public_keys/${admin_username}/id_rsa.pub" ]
 then
   cp arch-linux-server/public_keys/${admin_username}/id_rsa.pub /home/${admin_username}/.ssh/authorized_keys
-fi  
-chown -R ${admin_username}:${admin_username} /home/${admin_username}/.ssh
+fi
+chown -R ${admin_username}.${admin_username} /home/${admin_username}/.ssh
 
 random_passwd_root=$(cat /dev/urandom | tr -dc "a-zA-Z0-9!@#$%^&*()_+?><~\;" | fold -w 32 | head -n 1)
 random_passwd_user=$(cat /dev/urandom | tr -dc "a-zA-Z0-9!@#$%^&*()_+?><~\;" | fold -w 32 | head -n 1)
@@ -88,9 +88,9 @@ Root passwd: $random_passwd_root
 
 " > /root/mails/newserver.email
 
-echo echo ${admin_email} >> /root/.forward
-echo echo ${admin_user_email} >> /home/jaap/.forward
-chown ${admin_username}:${admin_username} /home/jaap.forward
+echo ${admin_email} >> /root/.forward
+echo ${admin_user_email} >> /home/jaap/.forward
+chown ${admin_username}.${admin_username} /home/jaap.forward
 
 
 cp arch-linux-server/config/etc/systemd/system/post-installation.service /etc/systemd/system/
