@@ -16,9 +16,9 @@ sudo systemctl start mariadb
 random_passwd_root=$(cat /dev/urandom | tr -dc "a-zA-Z0-9!@#$%^&*()_+?><~\;" | fold -w 32 | head -n 1)
 echo "root@$hostname
 root@$hostname
-MySQL Installations
+MySQL Installation successfully on $hostname
 
-Root passwd: $random_passwd_root
+Root password: $random_passwd_root
 
 " > /var/mails/mysql.email
 
