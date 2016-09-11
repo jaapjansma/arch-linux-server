@@ -33,7 +33,7 @@ mysql -u root -e "DROP DATABASE test"
 # Make our changes take effect
 mysql -u root -e "FLUSH PRIVILEGES"
 
-python3 /usr/local/bin/arch-linux-server/scripts/send-email-from-dir.py --directory=/tmp/mails
+python3 /usr/local/bin/arch-linux-server/scripts/send-email-from-dir.py --directory=/var/mails
 
 # Make sure the port 3306 is only permitted from a local interface and not from outside.
 sudo bash -c "iptables -A INPUT -i lo -p tcp --dport 3306 -j ACCEPT"
