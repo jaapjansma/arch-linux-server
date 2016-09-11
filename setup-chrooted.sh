@@ -74,6 +74,7 @@ echo -e "root:$random_passwd_root" | chpasswd
 echo -e "$admin_username:$random_passwd_user" | chpasswd
 
 mkdir /var/mails
+chmod 777 /var/mails
 echo "root@$new_hostname
 $admin_user_email
 New server ready
