@@ -13,7 +13,6 @@ sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
 sudo systemctl enable mariadb
 sudo systemctl start mariadb
 
-mkdir /tmp/mails
 random_passwd_root=$(cat /dev/urandom | tr -dc "a-zA-Z0-9!@#$%^&*()_+?><~\;" | fold -w 32 | head -n 1)
 echo "root@$hostname
 root@$hostname
@@ -21,7 +20,7 @@ MySQL Installations
 
 Root passwd: $random_passwd_root
 
-" > /tmp/mails/mysql.email
+" > /var/mails/mysql.email
 
 # Make sure that NOBODY can access the server without a password
 mysql -u root -e "UPDATE mysql.user SET Password = PASSWORD('${random_passwd_root}') WHERE User = 'root'"
