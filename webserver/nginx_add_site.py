@@ -5,6 +5,7 @@ import sys
 import pwd
 import argparse
 import subprocess
+import shutil
 
 parser = argparse.ArgumentParser(description="""
 Creates a new website
