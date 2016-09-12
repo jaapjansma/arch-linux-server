@@ -29,15 +29,16 @@ if os.getenv("USER") != 'root':
 
 phpFpmDaemon = 'php-fpm'
 phpConfigDir = '/etc/php'
+phpFpmFilename = phpConfigDir + '/php-fpm.d/'+url+'.conf'
 if php56:
     phpConfigDir = '/etc/php56'
     phpFpmDaemon = 'php56-fpm'
+    phpFpmFilename = phpConfigDir + '/fpm.d/'+url+'.conf'
 
 # Create a PHP-FPM Config file
-phpFpmFilename = phpConfigDir + '/php-fpm.d/'+url+'.conf'
 phpSocketName = '/run/php-fpm/'+url+'.sock'
 phpFpmTemplateFile = open('/usr/local/bin/arch-linux-server/config/etc/php-fpm.d/template.conf')
-phpFpmFile = open(phpFpmFilename, 'w')
+phpFpmFile = open(phpFpmFilename, "w")
 phpFpmConfig = phpFpmTemplateFile.read()
 phpFpmConfig = phpFpmConfig.replace('[root]', root)
 phpFpmConfig = phpFpmConfig.replace('[username]', username)
@@ -49,7 +50,7 @@ phpFpmTemplateFile.close()
 
 # Create the NGINX site Config
 nginxTemplateFile = open('/usr/local/bin/arch-linux-server/config/etc/nginx/sites-available/template.conf')
-nginxConfigFile = open('/etc/nginx/sites-available/'+url+'.conf', 'w')
+nginxConfigFile = open('/etc/nginx/sites-available/'+url+'.conf', "w")
 nginxConfig = nginxTemplateFile.read();
 nginxConfig = phpFpmConfig.replace('[root]', root)
 nginxConfig = phpFpmConfig.replace('[username]', username)
