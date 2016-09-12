@@ -9,9 +9,9 @@ import subprocess
 parser = argparse.ArgumentParser(description="""
 Creates a new website
 """)
-parser.add_argument("--url", help="The URL of the site e.g www.yoursite.com", type=str, required=True)
+parser.add_argument("--url", help="The URL of the site e.g www.yoursite.com")
 parser.add_argument("--username", help="Username for which we create the site", type=str, required=True)
-parser.add_argument("--php56", help="Enable php 5.6, default set to false (php 7)", type=bool, default=False, required=False)
+parser.add_argument("--php56", help="Enable php 5.6, default set to false (php 7)", action='store_true' type=bool, default=False, required=False)
 parser.add_argument("--directory", help="The directory which contains the website file", type=str, default="/home/[user]/www/[url]", required=False)
 args = parser.parse_args()
 
