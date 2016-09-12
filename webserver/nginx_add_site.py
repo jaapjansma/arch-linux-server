@@ -62,6 +62,7 @@ nginxConfigFile.close()
 
 # Create root directory
 os.makedirs(root)
+shutil.chown(root, username, username)
 os.symlink('/etc/nginx/sites-available/'+url+'.conf', '/etc/nginx/sites-enabled/'+url+'.conf')
 subprocess.call(["systemctl", "reload", phpFpmDaemon])
 subprocess.call(["systemctl", "reload", "nginx"])
