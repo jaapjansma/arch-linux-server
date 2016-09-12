@@ -9,10 +9,10 @@ import subprocess
 parser = argparse.ArgumentParser(description="""
 Creates a new website
 """)
-parser.add_argument("--url", help="The URL of the site e.g www.yoursite.com")
-parser.add_argument("--username", help="Username for which we create the site", type=str, required=True)
+parser.add_argument("url", help="The URL of the site e.g www.yoursite.com", type=str)
+parser.add_argument("username", help="Username for which we create the site", type=str)
 parser.add_argument("--php56", help="Enable php 5.6, default set to false (php 7)", action='store_true', required=False)
-parser.add_argument("--directory", help="The directory which contains the website file", type=str, default="/home/[user]/www/[url]", required=False)
+parser.add_argument("--directory", help="The directory which contains the website files. Default to /home/[username]/www/[url]", type=str, default="/home/[user]/www/[url]", required=False)
 args = parser.parse_args()
 
 url = args.url
@@ -20,11 +20,11 @@ url = url.replace('http://', '')
 url = url.replace('https://', '')
 username = args.username
 root = args.directory
-root = directory.replace('[url]', url)
-root = directory.replace('[user]', username)
+root = root.replace('[url]', url)
+root = root.replace('[user]', username)
 php56 = args.php56
 
-if os.getenv("USER") == 'root':
+if os.getenv("USER") != 'root':
     sys.exit("This script should be run as root. Abort")
 
 phpFpmDaemon = 'php-fpm'
