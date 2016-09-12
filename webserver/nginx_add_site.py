@@ -13,7 +13,7 @@ Creates a new website
 parser.add_argument("url", help="The URL of the site e.g www.yoursite.com", type=str)
 parser.add_argument("username", help="Username for which we create the site", type=str)
 parser.add_argument("--php56", help="Enable php 5.6, default set to false (php 7)", action='store_true', required=False)
-parser.add_argument("--directory", help="The directory which contains the website files. Default to /home/[username]/www/[url]", type=str, default="/home/[user]/www/[url]", required=False)
+parser.add_argument("--directory", help="The directory which contains the website files. Default to /var/www/[username]/[url]", type=str, default="/var/www/[user]/[url]", required=False)
 args = parser.parse_args()
 
 url = args.url
@@ -31,13 +31,14 @@ if os.getenv("USER") != 'root':
 phpFpmDaemon = 'php-fpm'
 phpConfigDir = '/etc/php'
 phpFpmFilename = phpConfigDir + '/php-fpm.d/'+url+'.conf'
+phpSocketName = '/run/php-fpm/'+url+'.sock'
 if php56:
     phpConfigDir = '/etc/php56'
     phpFpmDaemon = 'php56-fpm'
     phpFpmFilename = phpConfigDir + '/fpm.d/'+url+'.conf'
+    phpSocketName = '/run/php56-fpm/'+url+'.sock'
 
 # Create a PHP-FPM Config file
-phpSocketName = '/run/php-fpm/'+url+'.sock'
 phpFpmTemplateFile = open('/usr/local/bin/arch-linux-server/config/etc/php-fpm.d/template.conf')
 phpFpmFile = open(phpFpmFilename, "w")
 phpFpmConfig = phpFpmTemplateFile.read()
@@ -55,7 +56,7 @@ nginxConfigFile = open('/etc/nginx/sites-available/'+url+'.conf', "w")
 nginxConfig = nginxTemplateFile.read();
 nginxConfig = nginxConfig.replace('[root]', root)
 nginxConfig = nginxConfig.replace('[username]', username)
-nginxConfig = nginxConfig.replace('[site]', url)
+nginxConfig = nginxConfig.replace('[url]', url)
 nginxConfig = nginxConfig.replace('[socket]', phpSocketName)
 nginxConfigFile.write(nginxConfig)
 nginxTemplateFile.close();
@@ -64,6 +65,7 @@ nginxConfigFile.close()
 # Create root directory
 os.makedirs(root)
 shutil.chown(root, username, username)
+os.chmod(root, stat.S_IXOTH)
 os.symlink('/etc/nginx/sites-available/'+url+'.conf', '/etc/nginx/sites-enabled/'+url+'.conf')
 subprocess.call(["systemctl", "reload", phpFpmDaemon])
 subprocess.call(["systemctl", "reload", "nginx"])

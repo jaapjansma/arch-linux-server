@@ -32,5 +32,8 @@ sudo cp /usr/local/bin/arch-linux-server/webserver/favicon/favicon.ico /usr/shar
 sudo chown -R http.http /usr/share/nginx/html
 sudo chmod 0755 /usr/share/nginx/html
 
+sudo mkdir /var/www
+sudo chmod a+x /var/www
+
 sudo systemctl enable nginx
 sudo systemctl start nginx

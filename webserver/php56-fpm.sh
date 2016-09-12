@@ -26,7 +26,7 @@ sudo sed -i 's/;date.timezone =/date.timezone = Europe\/Amsterdam/g' /etc/php56/
 sudo sed -i 's/post_max_size = 8M/post_max_size = 128M/g' /etc/php56/php.ini
 sudo sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 128M/g' /etc/php56/php.ini
 
-sudo sed -i 's/;include=\/etc\/php56\/fpm.d\/*.conf/include=\/etc\/php56\/fpm.d\/*.conf/g' /etc/php56/php-fpm.conf
+echo "include=/etc/php56/fpm.d/*.conf" >> /etc/php56/php-fpm.conf
 
 sudo systemctl enable php56-fpm
 sudo systemctl start php56-fpm
