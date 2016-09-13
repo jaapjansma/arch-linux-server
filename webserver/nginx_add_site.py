@@ -34,7 +34,7 @@ if os.path.exists(root):
     sys.exit("Looks like this site alrady exists on your system (check: " + root + ")")
 
 admin_email = "root@" + socket.gethostname()
-subprocess.call(["certbot", "certonly", "--webroot", "--webroot-path /usr/share/nginx/html", "-d " + url, "--email "+admin_email, "--agree-tos"])
+os.system("certbot certonly --webroot -w /usr/share/nginx/html -d " + url + " --email " + admin_email + "--agree-tos")
 
 phpFpmDaemon = 'php-fpm'
 phpConfigDir = '/etc/php'
