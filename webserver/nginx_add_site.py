@@ -29,7 +29,7 @@ php56 = args.php56
 if os.getenv("USER") != 'root':
     sys.exit("This script should be run as root. Abort")
 
-if os.direxists(root):
+if os.path.exists(root):
     sys.exit("Looks like this site alrady exists on your system (check: " + root + ")")
 
 admin_email = "root@" + socket.gethostname()
