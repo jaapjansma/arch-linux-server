@@ -6,6 +6,7 @@ import pwd
 import argparse
 import subprocess
 import shutil
+import socket
 
 parser = argparse.ArgumentParser(description="""
 Creates a new website
@@ -13,7 +14,7 @@ Creates a new website
 parser.add_argument("url", help="The URL of the site e.g www.yoursite.com", type=str)
 parser.add_argument("username", help="Username for which we create the site", type=str)
 parser.add_argument("--php56", help="Enable php 5.6, default set to false (php 7)", action='store_true', required=False)
-parser.add_argument("--directory", help="The directory which contains the website files. Default to /var/www/[username]/[url]", type=str, default="/var/www/[user]/[url]", required=False)
+parser.add_argument("--directory", help="The directory which contains the website files. Default to /var/www/[url]", type=str, default="/var/www/[url]", required=False)
 args = parser.parse_args()
 
 url = args.url
@@ -27,6 +28,12 @@ php56 = args.php56
 
 if os.getenv("USER") != 'root':
     sys.exit("This script should be run as root. Abort")
+
+if os.direxists(root):
+    sys.exit("Looks like this site alrady exists on your system (check: " + root + ")")
+
+admin_email = "root@" + socket.gethostname()
+subprocess.call(["certbot", "certonly", "--webroot", "-w /usr/share/nginx/html", "-d " + url, "--email "+admin_email, "--agree-tos"])
 
 phpFpmDaemon = 'php-fpm'
 phpConfigDir = '/etc/php'
