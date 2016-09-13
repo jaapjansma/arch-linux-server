@@ -40,7 +40,6 @@ sed -i 's/#TMPDIR="\/tmp"/TMPDIR="/var/yaourt"/g' /etc/yaourtrc
 
 mkdir /etc/skel/tmp
 mkdir /etc/skel/bin
-mkdir /etc/skel/www
 echo "export PATH=\$PATH:~/bin" >> /etc/skel/.bashrc
 
 echo "%wheel      ALL=(ALL) ALL" >> /etc/sudoers
@@ -73,6 +72,9 @@ random_passwd_user=$(cat /dev/urandom | tr -dc "a-zA-Z0-9!@#$%^&*()_+?><~\;" | f
 echo -e "root:$random_passwd_root" | chpasswd
 echo -e "$admin_username:$random_passwd_user" | chpasswd
 
+mkdir /var/www
+chmod a+x /var/www
+ln -s /var/www /home/$admin_username/www
 mkdir /var/mails
 chmod 777 /var/mails
 echo "root@$new_hostname
