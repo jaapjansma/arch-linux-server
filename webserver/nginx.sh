@@ -22,7 +22,7 @@ sudo systemctl daemon-reload
 
 # Configure HTTPS
 sudo mkdir -p /etc/nginx/ssl &&
-sudo openssl rand 48 -out /etc/nginx/ssl/ticket.key &&
+sudo openssl rand -out /etc/nginx/ssl/ticket.key 48 &&
 sudo openssl dhparam -out /etc/nginx/ssl/dhparam4.pem 4096
 
 sudo cp config/etc/nginx/sites-default/default-https.conf /etc/nginx/sites-default/default-https.conf
