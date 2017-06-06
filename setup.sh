@@ -22,7 +22,6 @@ parted /dev/vda -s mkpart primary ext4 30GiB 100%
 
 mkfs.ext4 /dev/vda1
 mkfs.ext4 /dev/vda2
-mkfs.ext4 /dev/vda3
 
 mount /dev/vda1 /mnt
 mkdir /mnt/home
